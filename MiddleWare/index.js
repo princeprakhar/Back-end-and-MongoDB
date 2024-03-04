@@ -30,12 +30,25 @@ function authKidney(req,res,next)
   }
   next();
 }
-
-//defing the get action.
+//defint the post method
+app.use(express.json());
+app.post('/add-kidney',(req,res)=>{
+  let kindey = req.body.kidney;
+  let kidneyLen = kindey.length;
+  res.send("No of kidney is "+kidneyLen);
+  
+});
+//defing the get method action.
 app.get('/health-checkup', auth, authKidney, function (req,res){
  
   res.json({
     "msg":"Your kidney is fine."
   });
+});
+//defining the error handling middleware.or gloabal catches.
+app.use((err,req,res,next)=>{
+  res.json({
+    "msg": "something error happened at the server side"
+  })
 });
 app.listen(3000);
